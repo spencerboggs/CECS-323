@@ -13,6 +13,12 @@ class Schema(Base):
 
     PrimaryKeyConstraint(schemaName, name="schema_pk")
 
+    @validates("description")
+    def validate_description(self, key, description):
+        if isinstance(description, str) and len(description) <= 10:
+            raise ValueError("Your description is too short")
+        return description
+
     @validates("creationDate")
     def validate_creationDate(self, key, creationDate: datetime.date):
         if not isinstance(creationDate, datetime.date):
