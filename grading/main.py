@@ -1,7 +1,10 @@
+import os
 import csv
 import sys
 import fetchcsv
 import json
+
+FILE_ID = os.getenv('FILE_ID')
 
 try:
     id = int(input('Enter your ID: '))
@@ -10,7 +13,7 @@ except ValueError:
     sys.exit(1)
 
 def read_csv():
-    with open('data.csv') as csv_file:
+    with open(str(FILE_ID) + '.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         data = []
@@ -61,7 +64,6 @@ def print_table(data):
             else:
                 print(f'{i + 1:<10}{data[i][0]:<30}{data[i][1]:<10}{data[i][2]:<10}{data[i][3]:<5}')
 
-        
 def main():
     fetchcsv.main()
     data = read_csv()
@@ -74,6 +76,7 @@ def main():
     print(f'Minimum points for an A: {min_A}')
     print(f'Minimum points for a B: {min_B}')
     print(f'Mean score: {find_mean(data)}')
+    print(f'Mean (trimmed dropped students): {find_mean(data[0:-2])}')
 
 
 if __name__ == '__main__':
