@@ -23,7 +23,7 @@ def read_csv():
         return data
     
 def sort_data(data):
-    data.sort(key=lambda x: x[1], reverse=True)
+    data.sort(key=lambda x: float(x[1]), reverse=True)
     return data
 
 def validate_id(data, id):
